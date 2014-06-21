@@ -1,3 +1,7 @@
+tgfactor = .0164;
+rcfactor = .3403;
+mfactor = .01;
+
 function getTeamStats(team)
 {
 	if (teams[team].teamgoals==undefined)
@@ -64,7 +68,8 @@ function getTeamStats(team)
 				i += 1;
 			}
 		}
-		teams[team.cohesion] = parseInt(100*i/result.length);
+		teams[team].cohesion = parseInt(100*i/result.length);
+		teams[team].score = teams[team].teamgoals * tgfactor + teams[team].redcards * rcfactor + teams[team].momentum * mfactor;
 	}
 	return teams;
 }
@@ -116,25 +121,43 @@ $(document).on("ready", function(){
 
 var team1 = [];
 var team2 = [];
+var currentteams = [];
 var categories = ["Goals", "Goal Momentum", "Mins Played", "Red Cards", "Yellow Cards"];
 
 function changeTeam1(team)
 {
+	currentteams[0] = team;
 	getTeamStats(team);
 	team1 = ["team1", teams[team].teamgoals, (teams[team].goalsDiff+7)*2, teams[team].minutes/500, teams[team].redcards*25, teams[team].yellowcards];
 	chart.load({
         columns:[team1]
     });
     chart.data.names({team1: team});
+
+    updateWinner();
 }
 
 function changeTeam2(team)
 {
+	currentteams[1] = team;
 	getTeamStats(team);
 	team2 = ["team2", -teams[team].teamgoals, -(teams[team].goalsDiff+7)*2, -teams[team].minutes/500, -teams[team].redcards*25, -teams[team].yellowcards];
 	chart.load({
         columns:[team2]
     });
     chart.data.names({team2: team});
+    updateWinner();
+}
+
+function updateWinner()
+{
+	if (teams[currentteams[0]] && teams[currentteams[1]] && teams[currentteams[0]].score>teams[currentteams[1]].score)
+    {
+    	$("#winner").html("<h3>kimono predicts...</h3><h1 style='text-transform:uppercase'>"+currentteams[0]+"</h1>");
+    }
+    else
+    {
+    	$("#winner").html("<h3>kimono predicts...</h3><h1 style='text-transform:uppercase'>"+currentteams[1]+"</h1>");
+    }
 }
 
