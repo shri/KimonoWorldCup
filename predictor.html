@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react-with-addons.min.js"></script>
 		<script src="kimono-main.min.js"></script>
 		<script src="c3.min.js"></script>
 		<script src="charts.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.8/d3.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="kimono-main.min.css">
 		<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/c3/0.1.29/c3.css">
-
+		<style>
+			.select1{
+				padding-bottom: 40px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -31,14 +34,16 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3">
-						<div class="row">
-							<div class="col-md-8" id="team1">
+						<div class="row select1">
+							<div class="col-md-8">
+								<select class="form-control input-sm" id="team1"><option value="1">Algeria</option><option value="2">Argentina</option><option value="3">Australia</option><option value="4">Belgium</option><option value="5">Bosnia-Herzegovina</option><option value="6">Brazil</option><option value="7">Cameroon</option><option value="8">Chile</option><option value="9">Colombia</option><option value="10">Costa Rica</option><option value="11">Côte d'Ivoire</option><option value="12">Croatia</option><option value="13">Ecuador</option><option value="14">England</option><option value="15">France</option><option value="16" selected="selected">Germany</option><option value="17">Ghana</option><option value="18">Greece</option><option value="19">Honduras</option><option value="20">Iran</option><option value="21">Italy</option><option value="22">Japan</option><option value="23">Korea Republic</option><option value="24">Mexico</option><option value="25">Netherlands</option><option value="26">Nigeria</option><option value="27">Portugal</option><option value="28">Russia</option><option value="29">Spain</option><option value="30">Switzerland</option><option value="31">United States</option><option value="32">Uruguay</option></select>
 							</div>
 							<div class="col-md-4" id="team1flag">
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-8" id="team2">
+							<div class="col-md-8">
+								<select class="form-control input-sm" id="team2"><option value="1">Algeria</option><option value="2">Argentina</option><option value="3">Australia</option><option value="4">Belgium</option><option value="5">Bosnia-Herzegovina</option><option value="6" selected="selected">Brazil</option><option value="7">Cameroon</option><option value="8">Chile</option><option value="9">Colombia</option><option value="10">Costa Rica</option><option value="11">Côte d'Ivoire</option><option value="12">Croatia</option><option value="13">Ecuador</option><option value="14">England</option><option value="15">France</option><option value="16">Germany</option><option value="17">Ghana</option><option value="18">Greece</option><option value="19">Honduras</option><option value="20">Iran</option><option value="21">Italy</option><option value="22">Japan</option><option value="23">Korea Republic</option><option value="24">Mexico</option><option value="25">Netherlands</option><option value="26">Nigeria</option><option value="27">Portugal</option><option value="28">Russia</option><option value="29">Spain</option><option value="30">Switzerland</option><option value="31">United States</option><option value="32">Uruguay</option></select>
 							</div>
 							<div class="col-md-4" id="team2flag">
 							</div>

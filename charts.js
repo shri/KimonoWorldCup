@@ -69,7 +69,7 @@ function getTeamStats(team)
 			}
 		}
 		teams[team].cohesion = parseInt(100*i/result.length);
-		teams[team].score = teams[team].teamgoals * tgfactor + teams[team].redcards * rcfactor + teams[team].momentum * mfactor;
+		teams[team].score = teams[team].teamgoals * tgfactor - teams[team].redcards * rcfactor + teams[team].momentum * mfactor;
 	}
 	return teams;
 }
@@ -114,6 +114,13 @@ $(document).on("ready", function(){
 	    }
 	});
 
+	$("#team1").change(function(){
+		changeTeam1($("#team1 option:selected").text());
+	});
+
+	$("#team2").change(function(){
+		changeTeam2($("#team2 option:selected").text());
+	});
 
 });
 
@@ -128,7 +135,7 @@ function changeTeam1(team)
 {
 	currentteams[0] = team;
 	getTeamStats(team);
-	team1 = ["team1", teams[team].teamgoals, (teams[team].goalsDiff+7)*2, teams[team].minutes/500, teams[team].redcards*25, teams[team].yellowcards];
+	team1 = ["team1", teams[team].teamgoals, (parseInt(teams[team].goalsDiff)+12)*2, teams[team].minutes/500, teams[team].redcards*25, teams[team].yellowcards];
 	chart.load({
         columns:[team1]
     });
@@ -141,7 +148,7 @@ function changeTeam2(team)
 {
 	currentteams[1] = team;
 	getTeamStats(team);
-	team2 = ["team2", -teams[team].teamgoals, -(teams[team].goalsDiff+7)*2, -teams[team].minutes/500, -teams[team].redcards*25, -teams[team].yellowcards];
+	team2 = ["team2", -teams[team].teamgoals, -(parseInt(teams[team].goalsDiff)+12)*2, -teams[team].minutes/500, -teams[team].redcards*25, -teams[team].yellowcards];
 	chart.load({
         columns:[team2]
     });
