@@ -135,7 +135,7 @@ function changeTeam1(team)
 {
 	currentteams[0] = team;
 	getTeamStats(team);
-	team1 = ["team1", teams[team].teamgoals, (parseInt(teams[team].goalsDiff)+12)*2, teams[team].minutes/500, teams[team].redcards*25, teams[team].yellowcards];
+	team1 = ["team1", teams[team].teamgoals, (parseInt(teams[team].goalsDiff)+12)*2, parseInt(teams[team].minutes/500), teams[team].redcards*18+1, teams[team].yellowcards];
 	chart.load({
         columns:[team1]
     });
@@ -148,7 +148,7 @@ function changeTeam2(team)
 {
 	currentteams[1] = team;
 	getTeamStats(team);
-	team2 = ["team2", -teams[team].teamgoals, -(parseInt(teams[team].goalsDiff)+12)*2, -teams[team].minutes/500, -teams[team].redcards*25, -teams[team].yellowcards];
+	team2 = ["team2", -teams[team].teamgoals, -(parseInt(teams[team].goalsDiff)+12)*2, -parseInt(teams[team].minutes/500), -teams[team].redcards*18-1, -teams[team].yellowcards];
 	chart.load({
         columns:[team2]
     });
