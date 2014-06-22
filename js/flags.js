@@ -10,7 +10,17 @@ function kimonoCallback(data) {
 
         {
 
-            flags[value.property2.alt] = value.property2.src;
+            if (value.property2.alt == "Bosnia and Herzegovina" ){
+                value.property2.alt = "Bosnia-Herzegovina";
+
+            }
+
+            else if (value.property2.alt == "USA"){
+
+                value.property2.alt = "United States";
+            }
+
+           flags[value.property2.alt] = value.property2.src;
 
         }
 
