@@ -142,6 +142,7 @@ function changeTeam1(team)
     chart.data.names({team1: team});
 
     updateWinner();
+    $("#team1flag").html("<img src='"+flags[team]+"'></img>");
 }
 
 function changeTeam2(team)
@@ -154,6 +155,7 @@ function changeTeam2(team)
     });
     chart.data.names({team2: team});
     updateWinner();
+    $("#team2flag").html("<img src='"+flags[team]+"'></img>");
 }
 
 function updateWinner()
