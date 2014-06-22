@@ -7,11 +7,16 @@ function kimonoCallback(data) {
     // do something with the data
     // please make sure the scope of this function is global
     $.each(data.results.collection2, function(key,value)
+
         {
+
             flags[value.property2.alt] = value.property2.src;
+
         }
+
+
+
     );
-    console.log(flags);
 }
 
 $.ajax({
