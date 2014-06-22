@@ -1,0 +1,39 @@
+{
+    "teams":[{
+        {
+            argentina:"#3c4249"
+            australia:"#d2ad53"
+            belgium:"#de9ea2"
+            bosnia:"#7984b2"
+            brazil:"#c8ad64"
+            cameroon:"#95b0a8"
+            chile:"#dda5a8"
+            colombia:"#eae7a7"
+            costa_rica:"#d39097"
+            croatia:"#9f797f"
+            ecuador:"#e5e0b0"
+            england:"#b6b6b6"
+            france:"#60697b"
+            germany:"#dbd6d9"
+            ghana:"#e9e9e8"
+            greece:"#b5b7bb"
+            holland:"#d5744f"
+            honduras:"#e5e6ef"
+            iran:"#d8d3d3"
+            italy:"#aab9dd"
+            japan:"#969dba"
+            korea:"#ab5356"
+            mexico:"#94bdae"
+            nigeria:"#16552a"
+            portugal:"#944f52"
+            russia:"#2f0b15"
+            spain:"#4c0e0d"
+            switzerland:"#d79598"
+            uruguay:"#ccd9e9"
+            usmnt:"#b6b5b5"
+
+        }]
+}
+
+
+
