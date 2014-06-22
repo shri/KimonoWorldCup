@@ -140,7 +140,7 @@ function changeTeam1(team)
         columns:[team1]
     });
     chart.data.names({team1: team});
-
+    chart.data.colors({team1: d3.rgb(colors[team]).darker(2)});
     updateWinner();
     $("#team1flag").html("<img src='"+flags[team]+"'></img>");
 }
@@ -154,6 +154,7 @@ function changeTeam2(team)
         columns:[team2]
     });
     chart.data.names({team2: team});
+    chart.data.colors({team2: d3.rgb(colors[team])});
     updateWinner();
     $("#team2flag").html("<img src='"+flags[team]+"'></img>");
 }
@@ -169,4 +170,46 @@ function updateWinner()
     	$("#winner").html("<h3>kimono predicts...</h3><h1 style='text-transform:uppercase'>"+currentteams[1]+"</h1>");
     }
 }
+
+
+var colors = 
+{
+	"Algeria": "#00FF99",
+    "Argentina":"#3c4249",
+    "Australia":"#d2ad53",
+    "Belgium":"#de9ea2",
+    "Bosnia-Herzegovina":"#7984b2",
+    "Brazil":"#c8ad64",
+    "Cameroon":"#95b0a8",
+    "Chile":"#dda5a8",
+    "Colombia":"#eae7a7",
+    "Costa Rica":"#d39097",
+    "Côte d'Ivoire": "#F77F00",
+    "Croatia":"#9f797f",
+    "Ecuador":"#e5e0b0",
+    "England":"#b6b6b6",
+    "France":"#60697b",
+    "Germany":"#dbd6d9",
+    "Ghana":"#e9e9e8",
+    "Greece":"#b5b7bb",
+    "Honduras":"#e5e6ef",
+    "Iran":"#d8d3d3",
+    "Italy":"#aab9dd",
+    "Japan":"#969dba",
+    "Korea Republic":"#ab5356",
+    "Mexico":"#94bdae",
+    "Netherlands": " #AE1C28",
+    "Nigeria":"#16552a",
+    "Portugal":"#944f52",
+    "Russia":"#2f0b15",
+    "Spain":"#4c0e0d",
+    "Switzerland":"#d79598",
+    "United States": "#b6b5b5",
+    "Uruguay":"#ccd9e9"
+
+}
+
+
+
+
 
