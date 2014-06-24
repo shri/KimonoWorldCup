@@ -76,7 +76,7 @@ function getTeamStats(team)
 
 var teams = {};
 var chart = null;
-$(document).on("ready", function(){
+var startCharts = function(){
 	$.getJSON("http://worldcup.kimonolabs.com/api/teams?apikey=989877be85a3ca05477428c8b41d4fbe", function(data) 
 	{
 		for (var i=0; i<data.length; i++)
@@ -84,6 +84,8 @@ $(document).on("ready", function(){
 			teams[data[i].name] = data[i];
 		  	// set select state to team
 		}
+
+
 		changeTeam1("Germany");
 		changeTeam2("Brazil");
 	});
@@ -122,7 +124,7 @@ $(document).on("ready", function(){
 		changeTeam2($("#team2 option:selected").text());
 	});
 
-});
+}
 
 
 
@@ -140,7 +142,7 @@ function changeTeam1(team)
         columns:[team1]
     });
     chart.data.names({team1: team});
-    chart.data.colors({team1: d3.rgb(colors[team]).darker(2)});
+    // chart.data.colors({team1: d3.rgb(colors[team]).darker(2)});
     updateWinner();
     $("#team1flag").html("<img src='"+flags[team]+"'></img>");
 }
@@ -154,7 +156,7 @@ function changeTeam2(team)
         columns:[team2]
     });
     chart.data.names({team2: team});
-    chart.data.colors({team2: d3.rgb(colors[team])});
+    // chart.data.colors({team2: d3.rgb(colors[team])});
     updateWinner();
     $("#team2flag").html("<img src='"+flags[team]+"'></img>");
 }
@@ -163,11 +165,11 @@ function updateWinner()
 {
 	if (teams[currentteams[0]] && teams[currentteams[1]] && teams[currentteams[0]].score>teams[currentteams[1]].score)
     {
-    	$("#winner").html("<h3>kimono predicts...</h3><h1 style='text-transform:uppercase'>"+currentteams[0]+"</h1>");
+    	$("#winner").html("<h3>kimono predicts...</h3><h1 style='text-transform:uppercase; color: rgb(31, 119, 180);'>"+currentteams[0]+"</h1>");
     }
     else
     {
-    	$("#winner").html("<h3>kimono predicts...</h3><h1 style='text-transform:uppercase'>"+currentteams[1]+"</h1>");
+    	$("#winner").html("<h3>kimono predicts...</h3><h1 style='text-transform:uppercase; color: rgb(255, 127, 14)'>"+currentteams[1]+"</h1>");
     }
 }
 

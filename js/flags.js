@@ -27,6 +27,8 @@ function kimonoCallback(data) {
 
 
     );
+
+    startCharts();
 }
 
 $.ajax({
