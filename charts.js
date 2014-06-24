@@ -2,7 +2,21 @@ tgfactor = .0164;
 rcfactor = .3403;
 mfactor = .12;
 
+tgfactor_i = .0164;
+rcfactor_i = .3403;
+mfactor_i = .12;
 
+function recalculateScores(){
+	tgfactor = tgfactor_i * $(".dial-tg").val() / 50;
+	rcfactor = rcfactor_i * $(".dial-rc").val() / 50;
+	mfactor = mfactor_i * $(".dial-m").val() / 50;
+	for (var team in colors)
+	{
+		teams[team].score = teams[team].teamgoals * tgfactor - teams[team].redcards * rcfactor + teams[team].momentum * mfactor;
+	}
+
+	updateWinner();
+}
 
 
 function generateStats()
@@ -180,7 +194,7 @@ var startCharts = function(){
 var team1 = [];
 var team2 = [];
 var currentteams = [];
-var categories = ["Goals", "Goal Momentum", "Mins Played", "Red Cards", "Yellow Cards"];
+var categories = ["Goals", "Goal Mmntm.", "Mins Played", "Red Cards", "Yellow Cards"];
 
 function changeTeam1(team)
 {

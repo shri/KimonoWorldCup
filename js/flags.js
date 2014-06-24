@@ -30,7 +30,9 @@ function kimonoCallback(data) {
     generateStats();
     startCharts();
 }
-
+$(document).on("ready", function(){
+    $(".dial").knob({'release' : function (v) {recalculateScores();}});
+});
 $.ajax({
     "url":"http://www.kimonolabs.com/api/c30l5e5u?apikey=5eadc80e616c893a6320ae4fe3763624&kimlimit=1000&callback=kimonoCallback",
     "crossDomain":true,
