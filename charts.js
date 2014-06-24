@@ -199,7 +199,7 @@ var categories = ["Goals", "Goal Mmntm.", "Mins Played", "Red Cards", "Yellow Ca
 function changeTeam1(team)
 {
 	currentteams[0] = team;
-	team1 = ["team1", teams[team].teamgoals, (parseInt(teams[team].goalsDiff)+12)*2, parseInt(teams[team].minutes/500), teams[team].redcards*18+1, teams[team].yellowcards];
+	team1 = ["team1", teams[team].teamgoals+1, (parseInt(teams[team].goalsDiff)+12)*2, parseInt(teams[team].minutes/500)+1, teams[team].redcards*18+1, teams[team].yellowcards+1];
 	console.log(team1);
 	chart.load({
         columns:[team1]
@@ -213,7 +213,7 @@ function changeTeam1(team)
 function changeTeam2(team)
 {
 	currentteams[1] = team;
-	team2 = ["team2", -teams[team].teamgoals, -(parseInt(teams[team].goalsDiff)+12)*2, -parseInt(teams[team].minutes/500), -teams[team].redcards*18-1, -teams[team].yellowcards];
+	team2 = ["team2", -teams[team].teamgoals-1, -(parseInt(teams[team].goalsDiff)+12)*2, -parseInt(teams[team].minutes/500)-1, -teams[team].redcards*18-1, -teams[team].yellowcards-1];
 	chart.load({
         columns:[team2]
     });
