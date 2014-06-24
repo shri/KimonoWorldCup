@@ -27,7 +27,7 @@ function kimonoCallback(data) {
 
 
     );
-
+    generateStats();
     startCharts();
 }
 
