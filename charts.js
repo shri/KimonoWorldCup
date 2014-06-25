@@ -1,10 +1,10 @@
-tgfactor = .0164;
-rcfactor = .3403;
-mfactor = .12;
+tgfactor = .12;
+rcfactor = .4;
+mfactor = .04;
 
-tgfactor_i = .0164;
-rcfactor_i = .3403;
-mfactor_i = .12;
+tgfactor_i = .12;
+rcfactor_i = .4;
+mfactor_i = .04;
 
 function recalculateScores(){
 	tgfactor = tgfactor_i * $(".dial-tg").val() / 50;
