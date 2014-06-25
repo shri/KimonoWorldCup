@@ -6,6 +6,9 @@ tgfactor_i = .12;
 rcfactor_i = .4;
 mfactor_i = .04;
 
+valid = ['PRL','PRD','A-L','MLS','BUN','LI1','LIN','PRA','J1L','1.H','PGC','SEA','PRA','KLC','ELO','SUL','ERE','NPF','LIM', 
+    'ELI', 'LI2', '2.B', 'SED', 'SÜL', 'ALL', 'CSL', 'PSL', 'LEO', 'PRE', 'CHA', 'PSL', 'LIH'];
+
 function recalculateScores(){
 	tgfactor = tgfactor_i * $(".dial-tg").val() / 50;
 	rcfactor = rcfactor_i * $(".dial-rc").val() / 50;
@@ -36,7 +39,7 @@ function generateStats()
 		}
 	});
 	var result = null;
-	var scriptUrl = "http://worldcup.kimonolabs.com/api/players?includes=player_season_stats&apikey=989877be85a3ca05477428c8b41d4fbe&limit=5000";
+	var scriptUrl = "http://worldcup.kimonolabs.com/api/players?includes=player_season_stats&apikey=989877be85a3ca05477428c8b41d4fbe&limit=10000";
 	$.ajax({
         url: scriptUrl,
         type: 'get',
@@ -65,7 +68,7 @@ function generateStats()
 			var team = result[player].nationality;
 			for (var seasonid=0; seasonid<result[player].playerSeasonStats.length; seasonid++)
 			{
-				if ( (result[player].playerSeasonStats[seasonid].season=="2014") || (result[player].playerSeasonStats[seasonid].season=="2013/2014") )
+				if ( (result[player].playerSeasonStats[seasonid].season=="2014") || (result[player].playerSeasonStats[seasonid].season=="2013/2014") && ($.inArray(result[player].playerSeasonStats[seasonid].league, valid)!=-1) )
 				{
 					teams[team].teamgoals += result[player].playerSeasonStats[seasonid].goalsScored;
 					teams[team].redcards += result[player].playerSeasonStats[seasonid].redCards;
