@@ -1,10 +1,14 @@
 tgfactor = .12;
 rcfactor = .4;
 mfactor = .04;
+yfactor = 0;
+minfactor = 0;
 
 tgfactor_i = .12;
 rcfactor_i = .4;
 mfactor_i = .04;
+yfactor_i = .4;
+minfactor_i = .00005;
 
 valid = ['PRL','PRD','A-L','MLS','BUN','LI1','LIN','PRA','J1L','1.H','PGC','SEA','PRA','KLC','ELO','SUL','ERE','NPF','LIM', 
     'ELI', 'LI2', '2.B', 'SED', 'SÜL', 'ALL', 'CSL', 'PSL', 'LEO', 'PRE', 'CHA', 'PSL', 'LIH'];
@@ -13,10 +17,15 @@ function recalculateScores(){
 	tgfactor = tgfactor_i * $(".dial-tg").val() / 50;
 	rcfactor = rcfactor_i * $(".dial-rc").val() / 50;
 	mfactor = mfactor_i * $(".dial-m").val() / 50;
+	yfactor = yfactor_i * $(".dial-y").val() / 50;
+	minfactor = minfactor_i * $(".dial-min").val() / 50;
+
 	for (var team in colors)
 	{
-		teams[team].score = teams[team].teamgoals * tgfactor - teams[team].redcards * rcfactor + teams[team].momentum * mfactor;
+		teams[team].score = teams[team].teamgoals * tgfactor - teams[team].redcards * rcfactor + teams[team].momentum * mfactor - teams[team].yellowcards * yfactor + teams[team].minutes * minfactor;
 	}
+
+	reloadCharts();
 
 	updateWinner();
 }
@@ -138,7 +147,7 @@ function generateStats()
 
 	for (var team in colors)
 	{
-		teams[team].score = teams[team].teamgoals * tgfactor - teams[team].redcards * rcfactor + teams[team].momentum * mfactor;
+		teams[team].score = teams[team].teamgoals * tgfactor - teams[team].redcards * rcfactor + teams[team].momentum * mfactor - teams[team].yellowcards * yfactor + teams[team].minutes * minfactor;
 
 	}
 	return teams;
@@ -157,7 +166,7 @@ var startCharts = function(){
 	    data: {
 	    	x: 'x',
 	        columns: [
-	        	['x', "Goals", "Goal Momentum", "Mins Played", "Red Cards", "Yellow Cards"],
+	        	['x', "Goals", "Momentum", "Mins Played", "Red Cards", "Yellow Cards"],
 	            ['team1', 1, 1, 1, 1, 1],
 	            ['team2', -1, -1, -1, -1, -1]
 	        ],
@@ -196,13 +205,12 @@ var startCharts = function(){
 var team1 = [];
 var team2 = [];
 var currentteams = [];
-var categories = ["Goals", "Goal Mmntm.", "Mins Played", "Red Cards", "Yellow Cards"];
+var categories = ["Goals", "Momentum", "Mins Played", "Red Cards", "Yellow Cards"];
 
 function changeTeam1(team)
 {
 	currentteams[0] = team;
-	team1 = ["team1", teams[team].teamgoals+1, (parseInt(teams[team].goalsDiff)+12)*2, parseInt(teams[team].minutes/500)+1, teams[team].redcards*18+1, teams[team].yellowcards+1];
-	console.log(team1);
+	team1 = ["team1", parseInt(teams[team].teamgoals*tgfactor/tgfactor_i)+1, (parseInt(teams[team].momentum*mfactor/mfactor_i)+12)*4, parseInt(teams[team].minutes*minfactor/minfactor_i/700)+1, parseInt(teams[team].redcards*rcfactor/rcfactor_i*18)+1, parseInt(teams[team].yellowcards*yfactor/yfactor_i)+1];
 	chart.load({
         columns:[team1]
     });
@@ -215,7 +223,7 @@ function changeTeam1(team)
 function changeTeam2(team)
 {
 	currentteams[1] = team;
-	team2 = ["team2", -teams[team].teamgoals-1, -(parseInt(teams[team].goalsDiff)+12)*2, -parseInt(teams[team].minutes/500)-1, -teams[team].redcards*18-1, -teams[team].yellowcards-1];
+	team2 = ["team2", -parseInt(teams[team].teamgoals*tgfactor/tgfactor_i)-1, -(parseInt(teams[team].momentum*mfactor/mfactor_i)+12)*4, -parseInt(teams[team].minutes*minfactor/minfactor_i/700)-1, -parseInt(teams[team].redcards*rcfactor/rcfactor_i)*18-1, -parseInt(teams[team].yellowcards*yfactor/yfactor_i)-1];
 	chart.load({
         columns:[team2]
     });
@@ -223,6 +231,17 @@ function changeTeam2(team)
     // chart.data.colors({team2: d3.rgb(colors[team])});
     updateWinner();
     $("#team2flag").html("<img src='"+flags[team]+"'></img>");
+}
+
+function reloadCharts()
+{
+	var team = currentteams[0];
+	team1 = ["team1", parseInt(teams[team].teamgoals*tgfactor/tgfactor_i)+1, (parseInt(teams[team].momentum*mfactor/mfactor_i)+12)*4, parseInt(teams[team].minutes*minfactor/minfactor_i/700)+1, parseInt(teams[team].redcards*rcfactor/rcfactor_i*18)+1, parseInt(teams[team].yellowcards*yfactor/yfactor_i)+1];
+	team = currentteams[1];
+	team2 = ["team2", -parseInt(teams[team].teamgoals*tgfactor/tgfactor_i)-1, -(parseInt(teams[team].momentum*mfactor/mfactor_i)+12)*4, -parseInt(teams[team].minutes*minfactor/minfactor_i/700)-1, -parseInt(teams[team].redcards*rcfactor/rcfactor_i)*18-1, -parseInt(teams[team].yellowcards*yfactor/yfactor_i)-1];
+	chart.load({
+        columns:[team1, team2]
+    });
 }
 
 function updateWinner()
