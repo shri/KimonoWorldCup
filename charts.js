@@ -38,17 +38,18 @@ function generateStats()
 			}
 		}
 	});
-	var result = null;
-	var scriptUrl = "http://worldcup.kimonolabs.com/api/players?includes=player_season_stats&apikey=989877be85a3ca05477428c8b41d4fbe&limit=10000";
-	$.ajax({
-        url: scriptUrl,
-        type: 'get',
-        dataType: 'html',
-        async: false,
-        success: function(data) {
-            result = data;
-        } 
-     });
+	// This is how you would normally obtain the playerseasons variable
+	// var result = null;
+	// var scriptUrl = "http://worldcup.kimonolabs.com/api/players?includes=player_season_stats&apikey=989877be85a3ca05477428c8b41d4fbe&limit=10000";
+	// $.ajax({
+ //        url: scriptUrl,
+ //        type: 'get',
+ //        dataType: 'html',
+ //        async: false,
+ //        success: function(data) {
+ //            result = data;
+ //        } 
+ //     });
 	for (var team in colors)
 	{
 		teams[team].teamgoals = 0;
@@ -57,10 +58,8 @@ function generateStats()
 		teams[team].momentum = 0;
 		teams[team].minutes = 0;
 	}
-	console.log(team);
-	console.log(teams[team]);
 	var idteam = {};
-	result = JSON.parse(result);
+	var result = playerseasons;
 	for (var player=0; player<result.length; player++)
 	{
 		if(result[player].playerSeasonStats!=undefined)
