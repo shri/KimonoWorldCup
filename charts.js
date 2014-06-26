@@ -3,12 +3,145 @@ rcfactor = .4;
 mfactor = .04;
 yfactor = 0;
 minfactor = 0;
+cfactor = 0;
 
 tgfactor_i = .12;
 rcfactor_i = .4;
 mfactor_i = .04;
 yfactor_i = .4;
 minfactor_i = .00005;
+cfactor_i = 30;
+
+cohesion = [
+  {
+    "FIELD1":"England",
+    "FIELD2":0.391304348
+  },
+  {
+    "FIELD1":"Italy",
+    "FIELD2":0.434782609
+  },
+  {
+    "FIELD1":"Spain",
+    "FIELD2":0.391304348
+  },
+  {
+    "FIELD1":"Germany",
+    "FIELD2":0.47826087
+  },
+  {
+    "FIELD1":"Switzerland",
+    "FIELD2":0.695652174
+  },
+  {
+    "FIELD1":"Argentina",
+    "FIELD2":0.652173913
+  },
+  {
+    "FIELD1":"Chile",
+    "FIELD2":0.869565217
+  },
+  {
+    "FIELD1":"Belgium",
+    "FIELD2":0.739130435
+  },
+  {
+    "FIELD1":"Greece",
+    "FIELD2":0.652173913
+  },
+  {
+    "FIELD1":"Costa Rica",
+    "FIELD2":0.739130435
+  },
+  {
+    "FIELD1":"Iran",
+    "FIELD2":0.695652174
+  },
+  {
+    "FIELD1":"Russia",
+    "FIELD2":0.391304348
+  },
+  {
+    "FIELD1":"Honduras",
+    "FIELD2":0.652173913
+  },
+  {
+    "FIELD1":"Portugal",
+    "FIELD2":0.739130435
+  },
+  {
+    "FIELD1":"Croatia",
+    "FIELD2":0.826086957
+  },
+  {
+    "FIELD1":"Bosnia-Herzegovina",
+    "FIELD2":0.956521739
+  },
+  {
+    "FIELD1":"France",
+    "FIELD2":0.695652174
+  },
+  {
+    "FIELD1":"Japan",
+    "FIELD2":0.826086957
+  },
+  {
+    "FIELD1":"Côte d'Ivoire",
+    "FIELD2":0.826086957
+  },
+  {
+    "FIELD1":"Brazil",
+    "FIELD2":0.782608696
+  },
+  {
+    "FIELD1":"Colombia",
+    "FIELD2":0.913043478
+  },
+  {
+    "FIELD1":"Netherlands",
+    "FIELD2":0.652173913
+  },
+  {
+    "FIELD1":"Nigeria",
+    "FIELD2":0.869565217
+  },
+  {
+    "FIELD1":"Uruguay",
+    "FIELD2":0.913043478
+  },
+  {
+    "FIELD1":"Australia",
+    "FIELD2":0.913043478
+  },
+  {
+    "FIELD1":"United States",
+    "FIELD2":0.869565217
+  },
+  {
+    "FIELD1":"Algeria",
+    "FIELD2":1
+  },
+  {
+    "FIELD1":"Cameroon",
+    "FIELD2":1
+  },
+  {
+    "FIELD1":"Ghana",
+    "FIELD2":0.956521739
+  },
+  {
+    "FIELD1":"Korea Republic",
+    "FIELD2":0.782608696
+  },
+  {
+    "FIELD1":"Ecuador",
+    "FIELD2":0.739130435
+  },
+  {
+    "FIELD1":"Mexico",
+    "FIELD2":0.52173913
+  }
+]
 
 valid = ['PRL','PRD','A-L','MLS','BUN','LI1','LIN','PRA','J1L','1.H','PGC','SEA','PRA','KLC','ELO','SUL','ERE','NPF','LIM', 
     'ELI', 'LI2', '2.B', 'SED', 'SÜL', 'ALL', 'CSL', 'PSL', 'LEO', 'PRE', 'CHA', 'PSL', 'LIH'];
@@ -19,10 +152,11 @@ function recalculateScores(){
 	mfactor = mfactor_i * $(".dial-m").val() / 50;
 	yfactor = yfactor_i * $(".dial-y").val() / 50;
 	minfactor = minfactor_i * $(".dial-min").val() / 50;
+	cfactor = cfactor_i * $(".dial-c").val() / 50;
 
 	for (var team in colors)
 	{
-		teams[team].score = teams[team].teamgoals * tgfactor - teams[team].redcards * rcfactor + teams[team].momentum * mfactor - teams[team].yellowcards * yfactor + teams[team].minutes * minfactor;
+		teams[team].score = teams[team].cohesion * cfactor + teams[team].teamgoals * tgfactor - teams[team].redcards * rcfactor + teams[team].momentum * mfactor - teams[team].yellowcards * yfactor + teams[team].minutes * minfactor;
 	}
 
 	reloadCharts();
@@ -59,6 +193,11 @@ function generateStats()
  //            result = data;
  //        } 
  //     });
+	for (var obj in cohesion)
+	{
+		var stat = cohesion[obj];
+		teams[stat.FIELD1].cohesion = stat.FIELD2; 
+	}
 	for (var team in colors)
 	{
 		teams[team].teamgoals = 0;
@@ -147,7 +286,7 @@ function generateStats()
 
 	for (var team in colors)
 	{
-		teams[team].score = teams[team].teamgoals * tgfactor - teams[team].redcards * rcfactor + teams[team].momentum * mfactor - teams[team].yellowcards * yfactor + teams[team].minutes * minfactor;
+		teams[team].score = teams[team].cohesion * cfactor + teams[team].teamgoals * tgfactor - teams[team].redcards * rcfactor + teams[team].momentum * mfactor - teams[team].yellowcards * yfactor + teams[team].minutes * minfactor;
 
 	}
 	return teams;
@@ -166,9 +305,9 @@ var startCharts = function(){
 	    data: {
 	    	x: 'x',
 	        columns: [
-	        	['x', "Goals", "Momentum", "Mins Played", "Red Cards", "Yellow Cards"],
-	            ['team1', 1, 1, 1, 1, 1],
-	            ['team2', -1, -1, -1, -1, -1]
+	        	['x', "Goals", "Cohesion","Momentum", "Mins Played", "Red Cards", "Yellow Cards"],
+	            ['team1', 1, 1, 1, 1, 1, 1],
+	            ['team2', -1, -1, -1, -1, -1, -1]
 	        ],
 	        groups: [
 	            ['team1', 'team2']
@@ -205,12 +344,11 @@ var startCharts = function(){
 var team1 = [];
 var team2 = [];
 var currentteams = [];
-var categories = ["Goals", "Momentum", "Mins Played", "Red Cards", "Yellow Cards"];
 
 function changeTeam1(team)
 {
 	currentteams[0] = team;
-	team1 = ["team1", parseInt(teams[team].teamgoals*tgfactor/tgfactor_i)+1, (parseInt(teams[team].momentum*mfactor/mfactor_i)+12)*4, parseInt(teams[team].minutes*minfactor/minfactor_i/700)+1, parseInt(teams[team].redcards*rcfactor/rcfactor_i*18)+1, parseInt(teams[team].yellowcards*yfactor/yfactor_i)+1];
+	team1 = ["team1", parseInt(teams[team].teamgoals*tgfactor/tgfactor_i)+1, parseInt(teams[team].cohesion*cfactor/cfactor_i*60)+1,(parseInt(teams[team].momentum*mfactor/mfactor_i)+12)*4, parseInt(teams[team].minutes*minfactor/minfactor_i/700)+1, parseInt(teams[team].redcards*rcfactor/rcfactor_i*18)+1, parseInt(teams[team].yellowcards*yfactor/yfactor_i)+1];
 	chart.load({
         columns:[team1]
     });
@@ -223,7 +361,7 @@ function changeTeam1(team)
 function changeTeam2(team)
 {
 	currentteams[1] = team;
-	team2 = ["team2", -parseInt(teams[team].teamgoals*tgfactor/tgfactor_i)-1, -(parseInt(teams[team].momentum*mfactor/mfactor_i)+12)*4, -parseInt(teams[team].minutes*minfactor/minfactor_i/700)-1, -parseInt(teams[team].redcards*rcfactor/rcfactor_i)*18-1, -parseInt(teams[team].yellowcards*yfactor/yfactor_i)-1];
+	team2 = ["team2", -parseInt(teams[team].teamgoals*tgfactor/tgfactor_i)-1, -parseInt(teams[team].cohesion*cfactor/cfactor_i*60)-1,-(parseInt(teams[team].momentum*mfactor/mfactor_i)+12)*4, -parseInt(teams[team].minutes*minfactor/minfactor_i/700)-1, -parseInt(teams[team].redcards*rcfactor/rcfactor_i)*18-1, -parseInt(teams[team].yellowcards*yfactor/yfactor_i)-1];
 	chart.load({
         columns:[team2]
     });
@@ -236,9 +374,9 @@ function changeTeam2(team)
 function reloadCharts()
 {
 	var team = currentteams[0];
-	team1 = ["team1", parseInt(teams[team].teamgoals*tgfactor/tgfactor_i)+1, (parseInt(teams[team].momentum*mfactor/mfactor_i)+12)*4, parseInt(teams[team].minutes*minfactor/minfactor_i/700)+1, parseInt(teams[team].redcards*rcfactor/rcfactor_i*18)+1, parseInt(teams[team].yellowcards*yfactor/yfactor_i)+1];
+	team1 = ["team1", parseInt(teams[team].teamgoals*tgfactor/tgfactor_i)+1, parseInt(teams[team].cohesion*cfactor/cfactor_i*60)+1,(parseInt(teams[team].momentum*mfactor/mfactor_i)+12)*4, parseInt(teams[team].minutes*minfactor/minfactor_i/700)+1, parseInt(teams[team].redcards*rcfactor/rcfactor_i*18)+1, parseInt(teams[team].yellowcards*yfactor/yfactor_i)+1];
 	team = currentteams[1];
-	team2 = ["team2", -parseInt(teams[team].teamgoals*tgfactor/tgfactor_i)-1, -(parseInt(teams[team].momentum*mfactor/mfactor_i)+12)*4, -parseInt(teams[team].minutes*minfactor/minfactor_i/700)-1, -parseInt(teams[team].redcards*rcfactor/rcfactor_i)*18-1, -parseInt(teams[team].yellowcards*yfactor/yfactor_i)-1];
+	team2 = ["team2", -parseInt(teams[team].teamgoals*tgfactor/tgfactor_i)-1, -parseInt(teams[team].cohesion*cfactor/cfactor_i*60)-1,-(parseInt(teams[team].momentum*mfactor/mfactor_i)+12)*4, -parseInt(teams[team].minutes*minfactor/minfactor_i/700)-1, -parseInt(teams[team].redcards*rcfactor/rcfactor_i)*18-1, -parseInt(teams[team].yellowcards*yfactor/yfactor_i)-1];
 	chart.load({
         columns:[team1, team2]
     });
